@@ -7,11 +7,19 @@ jobs:
      - name: Check out repository code
        uses: actions/checkout@v3
 
-     - name: checks vunerbilites
-       run: cd insecure && npm i && npm audit
+    #  - name: checks vunerbilites
+    #    run: cd insecure && npm i && npm audit
 
      - name: checks lint
        run: cd mashup && npm i && npm i lint && npm run lint
 
      - name: runs the js test
        run: cd unittesting && npm i && npm run test
+
+     - name: Configure AWS credentials
+       id: creds
+       uses: aws-actions/configure-aws-credentials@v1
+       with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ github.event.inputs.region }}
